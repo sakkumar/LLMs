@@ -3,6 +3,7 @@ from transformer_block import LayerNorm
 from transformer_block import GPT_CONFIG_124M
 import torch.nn as nn
 import torch
+import tiktoken
 
 class GPTModel(nn.Module):
     def __init__(self, cfg):
@@ -29,8 +30,6 @@ class GPTModel(nn.Module):
         x = self.final_norm(x)
         logits = self.out_head(x)
         return logits
-
-import tiktoken
 
 tokenizer = tiktoken.get_encoding("gpt2")
 
