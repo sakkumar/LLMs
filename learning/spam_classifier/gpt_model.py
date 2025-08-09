@@ -1,6 +1,5 @@
 from transformer_block import TransformerBlock
 from transformer_block import LayerNorm
-from transformer_block import GPT_CONFIG_124M
 import torch.nn as nn
 import torch
 import tiktoken
@@ -30,35 +29,3 @@ class GPTModel(nn.Module):
         x = self.final_norm(x)
         logits = self.out_head(x)
         return logits
-
-tokenizer = tiktoken.get_encoding("gpt2")
-
-batch = []
-
-txt1 = "Every effort moves you"
-txt2 = "Every day holds a"
-
-batch.append(torch.tensor(tokenizer.encode(txt1)))
-batch.append(torch.tensor(tokenizer.encode(txt2)))
-batch = torch.stack(batch, dim=0)
-print("batch:", batch)
-
-torch.manual_seed(123)
-model = GPTModel(GPT_CONFIG_124M)
-
-out = model(batch)
-print("Input batch:\n", batch)
-print("\nOutput shape:", out.shape)
-print(out)
-
-total_params = sum(p.numel() for p in model.parameters())
-print(f"Total number of parameters: {total_params:,}")
-
-# Calculate the total size in bytes (assuming float32, 4 bytes per parameter)
-total_size_bytes = total_params * 4
-
-# Convert to megabytes
-total_size_mb = total_size_bytes / (1024 * 1024)
-
-print(f"Total size of the model: {total_size_mb:.2f} MB")
-

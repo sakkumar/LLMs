@@ -1,7 +1,14 @@
-import tiktoken
+# utility functions to convert text to token_ids and token ids to text
 import torch
-from gpt_model import GPTModel
-from transformer_block import GPT_CONFIG_124M
+
+def text_to_token_ids(text, tokenizer):
+    encoded = tokenizer.encode(text, allowed_special={'<|endoftext|>'})
+    encoded_tensor = torch.tensor(encoded).unsqueeze(0) # add batch dimension
+    return encoded_tensor
+
+def token_ids_to_text(token_ids, tokenizer):
+    flat = token_ids.squeeze(0) # remove batch dimension
+    return tokenizer.decode(flat.tolist())
 
 def generate_text_simple(model, idx, max_new_tokens, context_size):
     # idx is (batch, n_tokens) array of indices in the current context
@@ -30,31 +37,3 @@ def generate_text_simple(model, idx, max_new_tokens, context_size):
         idx = torch.cat((idx, idx_next), dim=1)  # (batch, n_tokens+1)
 
     return idx
-
-start_context = "Hello, I am"
-tokenizer = tiktoken.get_encoding("gpt2")
-encoded = tokenizer.encode(start_context)
-print("encoded:", encoded)
-
-encoded_tensor = torch.tensor(encoded).unsqueeze(0)
-print("encoded_tensor.shape:", encoded_tensor.shape)
-
-torch.manual_seed(123)
-model = GPTModel(GPT_CONFIG_124M)
-model.eval() # disable dropout
-
-out = generate_text_simple(
-    model=model,
-    idx=encoded_tensor, 
-    max_new_tokens=6, 
-    context_size=GPT_CONFIG_124M["context_length"]
-)
-
-print("Output:", out)
-print("Output length:", len(out[0]))
-
-decoded_text = tokenizer.decode(out.squeeze(0).tolist())
-print(decoded_text)
-
-
-
