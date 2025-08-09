@@ -1,0 +1,12 @@
+../.DS_Store
+.DS_Store
+accuracy-plot.pdf
+loss-plot.pdf
+test.csv
+train.csv
+validation.csv
+review_classifier.pth
+sms_spam_collection.zip
+sms_spam_collection/
+*.DS_Store
+gpt2/
