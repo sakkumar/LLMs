@@ -121,3 +121,19 @@ text_4 = (
 print(text_4, "->", classify_review(
     text_4, model, tokenizer, device, max_length=train_dataset.max_length
 ))
+
+text_5 = (
+    "Good morning! I'm Gina, a YouTube customer service representative. Your resume has"
+    " been recommended by multiple online recruitment platforms.🌟 High-paying position:"
+    " YouTube Optimization Specialist⏰ Flexible working hours | 🏡 Remote work |" 
+    " 💸 Daily salary: $50-500✅ No experience required - free training provided✅ Monthly salary:"
+    " $6,000-10,000 + daily salary (immediate payment)✅ Long-term position, part-time or full-time"
+    " options available✅ Help increase the exposure and views of YouTube users' videos"
+    "🌟 Company benefits:3-day paid trial period. After the trial period,"
+    " you can sign a formal W-2 form with the company. Enjoy statutory paid holidays,"
+    " medical insurance and education subsidies. The longer you work, the more welfare policies you will get."
+    " For more information, please send a message to this number: +17322289445")
+
+print(text_5, "->", classify_review(
+    text_5, model, tokenizer, device, max_length=train_dataset.max_length
+))

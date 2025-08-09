@@ -1,0 +1,10 @@
+--------------
+training
+--------------
+python3 download_spam_dataset.py
+python3 spam_classifier_fine_tuning.py
+
+--------------
+inference
+--------------
+python3 spam_classification_inference.py
